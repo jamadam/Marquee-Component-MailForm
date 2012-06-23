@@ -10,21 +10,21 @@ use Fcntl qw(:flock);
 use Carp;
 our $VERSION = '0.01';
 
-	__PACKAGE__->attr('mailto');
-	__PACKAGE__->attr('tmp_dir');
-	__PACKAGE__->attr('logfile');
-	__PACKAGE__->attr('smtp_from');
-	__PACKAGE__->attr('smtp_server');
-	__PACKAGE__->attr('form_elements');
-	__PACKAGE__->attr('auto_respond_to');
-	__PACKAGE__->attr('upload');
+    __PACKAGE__->attr('mailto');
+    __PACKAGE__->attr('tmp_dir');
+    __PACKAGE__->attr('logfile');
+    __PACKAGE__->attr('smtp_from');
+    __PACKAGE__->attr('smtp_server');
+    __PACKAGE__->attr('form_elements');
+    __PACKAGE__->attr('auto_respond_to');
+    __PACKAGE__->attr('upload');
     
     sub post {
         my ($self) = @_;
-		my $c = Marquee->c;
+        my $c = Marquee->c;
         my $tx = $c->tx;
-		my $app = Marquee->c->app;
-		
+        my $app = Marquee->c->app;
+        
         use Mojolicious::Sessions;
         if (! $c->session->{__PACKAGE__. '::session_id'}) {
             $c->session->{__PACKAGE__. '::session_id'} = session_id();
@@ -34,23 +34,23 @@ our $VERSION = '0.01';
         
         my $template;
         if ($self->user_err->count) {
-			$c->tx->req->method('get');
-			$app->dispatch;
+            $c->tx->req->method('get');
+            $app->dispatch;
         } else {
-			if ($tx->req->body_params->param('send')) {
-				$self->sendmail;
-				$app->serve_redirect($tx->req->body_params->param('nextpage'));
-			} else {
-				my $template = $tx->req->body_params->param('nextpage');
-				$template =~ s{^/}{};
-				$app->serve_dynamic($app->search_template($template));
-			}
+            if ($tx->req->body_params->param('send')) {
+                $self->sendmail;
+                $app->serve_redirect($tx->req->body_params->param('nextpage'));
+            } else {
+                my $template = $tx->req->body_params->param('nextpage');
+                $template =~ s{^/}{};
+                $app->serve_dynamic($app->search_template($template));
+            }
         }
     }
     
     sub save_temporary_file {
         my ($self) = @_;
-		my $c = Marquee->c;
+        my $c = Marquee->c;
         my @files = $c->req->upload('file');
         foreach my $file (@files) {
             my $name = $c->session->{__PACKAGE__. '::session_id'}. '_file_'. $file->filename;
@@ -65,7 +65,7 @@ our $VERSION = '0.01';
     
     sub sendmail_forward {
         my ($self) = @_;
-		my $c = Marquee->c;
+        my $c = Marquee->c;
         my $body = '';
         for my $key (@{$self->form_elements}) {
             $body .= sprintf("[%s]\n%s\n", $key, $c->req->body_params->param($key));
@@ -75,7 +75,7 @@ our $VERSION = '0.01';
     
     sub sendmail_auto_respond {
         my ($self) = @_;
-		my $c = Marquee->c;
+        my $c = Marquee->c;
         my $body = '';
         for my $key (@{$self->form_elements}) {
             $body .= sprintf("[%s]\n%s\n", $key, $c->req->body_params->param($key));
@@ -85,8 +85,8 @@ our $VERSION = '0.01';
     
     sub sendmail {
         my ($self) = @_;
-		my $c = Marquee->c;
-		my $tx = $c->tx;
+        my $c = Marquee->c;
+        my $tx = $c->tx;
         my $mailto = $self->mailto;
         my $auto_respond_to = $tx->req->body_params->param($self->auto_respond_to);
         
@@ -122,41 +122,41 @@ our $VERSION = '0.01';
     sub mail_attr_respond {
         croak 'It must be implemented by sub classes';
     }
-	
-	sub html_to_plaintext {
-		my $html = shift;
-		if ($html =~ qr{<body.*?>(.+?)</body>}s) {
-			$html = $1;
-		}
-		$html =~ s{<.+?>}{}g;
-		$html =~ s{\t}{  }g;
-		return $html;
-	}
+    
+    sub html_to_plaintext {
+        my $html = shift;
+        if ($html =~ qr{<body.*?>(.+?)</body>}s) {
+            $html = $1;
+        }
+        $html =~ s{<.+?>}{}g;
+        $html =~ s{\t}{  }g;
+        return $html;
+    }
     
     sub sendmail_backend {
         my ($self, $to, $subject, $body, $attach) = @_;
-		my $c = Marquee->c;
+        my $c = Marquee->c;
         
-		$subject = encode('MIME-Header', $subject);
-		
-		my $plain = html_to_plaintext($body);
-		
-		utf8::encode($body);
-		utf8::encode($plain);
+        $subject = encode('MIME-Header', $subject);
         
-		my $mime_sub = MIME::Lite->new(
-			Type 	=> 'multipart/alternative',
-		);
-		$mime_sub->attach(
-			Data     => $plain,
-			Type     => 'text/plain; charset=utf-8',
-			Encoding => 'Base64',
-		);
-		$mime_sub->attach(
-			Data     => $body,
-			Type     => 'text/html; charset=utf-8',
-			Encoding => 'Quoted-printable',
-		);
+        my $plain = html_to_plaintext($body);
+        
+        utf8::encode($body);
+        utf8::encode($plain);
+        
+        my $mime_sub = MIME::Lite->new(
+            Type     => 'multipart/alternative',
+        );
+        $mime_sub->attach(
+            Data     => $plain,
+            Type     => 'text/plain; charset=utf-8',
+            Encoding => 'Base64',
+        );
+        $mime_sub->attach(
+            Data     => $body,
+            Type     => 'text/html; charset=utf-8',
+            Encoding => 'Quoted-printable',
+        );
         
         $to = (ref $to) ? $to : [$to];
         
@@ -170,12 +170,12 @@ our $VERSION = '0.01';
             $smtp->to($addr);
             
             my $mime = MIME::Lite->new(
-				From    => encode('MIME-Header', $smtp_from),
+                From    => encode('MIME-Header', $smtp_from),
                 To      => encode('MIME-Header', $addr),
                 Subject => $subject,
-                Type 	=> 'multipart/mixed',
+                Type     => 'multipart/mixed',
             );
-    		$mime->attach($mime_sub);
+            $mime->attach($mime_sub);
             foreach my $name (@$attach) {
                 my $send_name = $name;
                 $send_name =~ s{^.+?_.+?_}{};
@@ -195,7 +195,7 @@ our $VERSION = '0.01';
     
     sub put_all_elems_in_hidden {
         my ($self) = @_;
-		my $c = Marquee->c;
+        my $c = Marquee->c;
         my $out = '';
         for my $key (@{$self->form_elements}) {
             my $val = $c->tx->req->body_params->param($key) || '';
@@ -224,38 +224,38 @@ our $VERSION = '0.01';
     ### ---
     ### sha generator wrapper
     ### ---
-	sub sha512_hex {
-		my $seed = shift;
-		my $hash;
-		$hash ||= eval {
-			require Digest::SHA;
-			Digest::SHA::sha512_hex($seed);
-		};
-		$hash ||= eval {
-			require Digest::SHA1;
-			Digest::SHA1::sha512_hex($seed);
-		};
-		if ($hash) {
-			return $hash;
-		}
-		die q{Library for SHA not available};
-	}
-	
+    sub sha512_hex {
+        my $seed = shift;
+        my $hash;
+        $hash ||= eval {
+            require Digest::SHA;
+            Digest::SHA::sha512_hex($seed);
+        };
+        $hash ||= eval {
+            require Digest::SHA1;
+            Digest::SHA1::sha512_hex($seed);
+        };
+        if ($hash) {
+            return $hash;
+        }
+        die q{Library for SHA not available};
+    }
+    
     ### ---
     ### generate session id
     ### ---
     sub session_id {
-		return sha512_hex($^T. $$. rand(1000000));
+        return sha512_hex($^T. $$. rand(1000000));
     }
     
     sub mail_id {
         my ($self, $addr, $body) = @_;
-		return sha512_hex($^T. $body);
+        return sha512_hex($^T. $body);
     }
-	
-	### ---
-	### user_error
-	### ---
+    
+    ### ---
+    ### user_error
+    ### ---
     sub user_err {
         my ($self) = @_;
         my $stash = Marquee->c->stash;
