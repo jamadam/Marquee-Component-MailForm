@@ -1,0 +1,83 @@
+<html>
+<head>
+	<style type="text/css">
+		* {font-size:1em; font-weight:normal;}
+		h2 {border-left:5px solid #ccc; padding:3px 10px;}
+		th {text-align:right; padding:5px; background-color:#dde}
+		td {padding:5px;}
+		pre{font-family:inhefit}
+	</style>
+</head>
+<body>
+<p>
+    <%= param('name1') %> <%= param('name2') %>様
+</p>
+
+<p>
+	下記内容でお申込みを受付いたしましたのでご確認ください。
+</p>
+<p>
+	この確認メールは自動で配信しております。
+	後ほど、担当者より改めてご確認のご連絡をさせていただきます。
+</p>
+
+<h2>
+    お問い合わせ内容
+</h2>
+
+<hr />
+
+<table>
+	<tr>
+		<th>お名前</th>
+		<td><%= param('name1') %> <%= param('name2') %></td>
+	</tr>
+	<tr>
+		<th>お名前(カナ)</th>
+		<td><%= param('kana1') %> <%= param('kana2') %></td>
+	</tr>
+	<tr>
+		<th>メール</th>
+		<td><%= param('mail1') %></td>
+	</tr>
+	<tr>
+		<th>お電話</th>
+		<td>
+			<%= param('tel1') %> - <%= param('tel2') %> - <%= param('tel3') %>
+		</td>
+	</tr>
+	<tr>
+		<th>FAX</th>
+		<td>
+			<%= param('fax1') %> - <%= param('fax2') %> - <%= param('fax3') %>
+		</td>
+	</tr>
+	<tr>
+		<th>住所</th>
+		<td>
+			〒<%= param('zip1') %> - <%= param('zip2') %>
+			<%= param('pref') %>
+			<%= param('addr1') %>
+			<%= param('addr2') %>
+			<%= param('addr3') %>
+		</td>
+	</tr>
+	<tr>
+		<th>お問合せ内容</th>
+		<td><pre><%= param('msg') %></pre></td>
+	</tr>
+</table>
+
+<hr />
+
+<p>
+    上記の内容で間違いがないか必ずご確認ください。
+    万一、お申込みに覚えがない場合や、記載内容に間違いがある場合は、
+    ご面倒ですが下記までご連絡ください。
+</p>
+<div>
+	--
+	info@example.com
+</div>
+</body>
+</html>

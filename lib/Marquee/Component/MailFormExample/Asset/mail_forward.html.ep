@@ -1,0 +1,61 @@
+<html>
+<head>
+	<style type="text/css">
+		* {font-size:1em; font-weight:normal;}
+		h2 {border-left:5px solid #ccc; padding:3px 10px;}
+		th {text-align:right; padding:5px; background-color:#dde}
+		td {padding:5px;}
+		pre{font-family:inhefit}
+	</style>
+</head>
+<body>
+<p>
+    お問い合わせがありました
+</p>
+
+<hr />
+
+<h2>
+    お問い合わせ内容
+</h2>
+
+<table>
+	<tr>
+		<th>お名前</th>
+		<td><%= param('name1') %> <%= param('name2') %></td>
+	</tr>
+	<tr>
+		<th>お名前(カナ)</th>
+		<td><%= param('kana1') %> <%= param('kana2') %></td>
+	</tr>
+	<tr>
+		<th>メール</th>
+		<td><%= param('mail1') %></td>
+	</tr>
+	<tr>
+		<th>お電話</th>
+		<td>
+			<%= param('tel1') %> - <%= param('tel2') %> - <%= param('tel3') %>
+		</td>
+	</tr>
+	<tr>
+		<th>FAX</th>
+		<td>
+			<%= param('fax1') %> - <%= param('fax2') %> - <%= param('fax3') %>
+		</td>
+	</tr>
+	<tr>
+		<th>住所</th>
+		<td>
+			〒<%= param('zip1') %> - <%= param('zip2') %>
+			<%= param('pref') %>
+			<%= param('addr1') %>
+			<%= param('addr2') %>
+			<%= param('addr3') %>
+		</td>
+	</tr>
+	<tr>
+		<th>お問合せ内容</th>
+		<td><pre><%= param('msg') %></pre></td>
+	</tr>
+</table>

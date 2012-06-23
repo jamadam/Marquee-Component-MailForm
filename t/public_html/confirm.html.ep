@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-style-type" content="text/css" />
+	<meta http-equiv="content-script-type" content="text/javascript" />
+	<title>MailForm Test Confirm</title>
+</head>
+
+<body>
+    <form method="post" action="./index.html" id="contactForm">
+        <div>
+            <input type="hidden" name="nextpage" value="/contact/thanks.html" />
+            <input type="hidden" name="send" value="1" />
+            <input type="hidden" name="name1" value="<%= param('name1') %>" />
+            <input type="hidden" name="name2" value="<%= param('name2') %>" />
+            <input type="hidden" name="kana1" value="<%= param('kana1') %>" />
+            <input type="hidden" name="kana2" value="<%= param('kana2') %>" />
+            <input type="hidden" name="zip1" value="<%= param('zip1') %>" />
+            <input type="hidden" name="zip2" value="<%= param('zip2') %>" />
+            <input type="hidden" name="pref" value="<%= param('pref') %>" />
+            <input type="hidden" name="addr1" value="<%= param('addr1') %>" />
+            <input type="hidden" name="addr2" value="<%= param('addr2') %>" />
+            <input type="hidden" name="addr3" value="<%= param('addr3') %>" />
+            <input type="hidden" name="tel1" value="<%= param('tel1') %>" />
+            <input type="hidden" name="tel2" value="<%= param('tel2') %>" />
+            <input type="hidden" name="tel3" value="<%= param('tel3') %>" />
+            <input type="hidden" name="fax1" value="<%= param('fax1') %>" />
+            <input type="hidden" name="fax2" value="<%= param('fax2') %>" />
+            <input type="hidden" name="fax3" value="<%= param('fax3') %>" />
+            <input type="hidden" name="mail1" value="<%= param('mail1') %>" />
+            <input type="hidden" name="mail2" value="<%= param('mail2') %>" />
+            <input type="hidden" name="msg" value="<%= param('msg') %>" />
+        </div>
+        <table>
+            <tr>
+                <th>
+                    姓名
+                </th>
+                <td>
+                    <%= param('name1') %> <%= param('name2') %>
+                    <br /><%= param('kana1') %> <%= param('kana2') %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    ご住所
+                </th>
+                <td>
+                    〒 <%= param('zip1') %> - <%= param('zip2') %>
+                    <%= param('pref') %>
+                    <br /><%= param('addr1') %>
+                    <br /><%= param('addr2') %>
+                    <br /><%= param('addr3') %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    お電話
+                </th>
+                <td>
+                    <%= param('tel1') %> - <%= param('tel2') %> - <%= param('tel3') %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    FAX
+                </th>
+                <td>
+                    <%= param('fax1') %> - <%= param('fax2') %> - <%= param('fax3') %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    メールアドレス
+                </th>
+                <td>
+                    <%= param('mail1') %>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    お問合せ内容
+                </th>
+                <td>
+                    <%= param('msg') %>
+                </td>
+            </tr>
+        </table>
+        <div id="formAct">
+            <input id="goSend" type="submit" value="この内容で送信します" />
+        </div>
+    </form>
+</body>
+</html>

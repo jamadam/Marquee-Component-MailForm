@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-style-type" content="text/css" />
+	<meta http-equiv="content-script-type" content="text/javascript" />
+	<title>MailForm Test</title>
+</head>
+
+<body>
+	<% if ($contact_form->user_err->count) { %>
+		<div id="errorMessage">
+			<p>以下の項目にエラーがございます。</p>
+			<ul id="error">
+				<%= iter @{$contact_form->user_err} => begin %>
+					<li><%= shift %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% } %>
+	
+	<p class="attention">
+		「<span>※</span>」は必須項目となっております。必ずご入力くださいますようお願いいたします。
+	</p>
+
+	<form method="post" action="./index.html" id="contactForm">
+		<div>
+			<input type="hidden" name="nextpage" value="/confirm.html" />
+		</div>
+		<div id="yourName" class="formBox clearfix">
+			<h4>お名前の入力[必須]</h4>
+			<dl class="half itemSet">
+				<dt>姓名</dt>
+				<dd>
+					姓 <input type="text" name="name1" id="name1" maxlength="10" value="<%= param('name1') %>" />
+					名 <input type="text" name="name2" id="name2" maxlength="10" value="<%= param('name2') %>" />
+				</dd>
+			</dl>
+			<dl class="half itemSet">
+				<dt>姓名(フリガナ)</dt>
+				<dd>
+					セイ <input type="text" name="kana1" id="kana1" maxlength="10" value="<%= param('kana1') %>" />
+					メイ <input type="text" name="kana2" id="kana2" maxlength="10" value="<%= param('kana2') %>" />
+				</dd>
+			</dl>
+		</div>
+		<div id="yourAddress2" class="formBox clearfix">
+			<h4>ご住所の入力[必須]</h4>
+			<dl class="itemSet zip">
+				<dt>郵便番号</dt>
+				<dd>
+					<input type="text" name="zip1" id="zip1" maxlength="3" value="<%= param('zip1') %>" /> - 
+					<input type="text" name="zip2" id="zip2" maxlength="4" value="<%= param('zip2') %>" />
+				</dd>
+			</dl>
+			<dl id="prefContainer">
+				<dt>都道府県</dt>
+				<dd>
+					<select name="pref">
+						<% my $pref = param('pref') || ''; %>
+						<option value="">【選択して下さい】</option>
+						<optgroup label="北海道・東北">
+							<option value="北海道" <%= $pref eq '北海道' ? 'selected="selected"' : '' %>>北海道</option>
+							<option value="青森県" <%= $pref eq '青森県' ? 'selected="selected"' : '' %>>青森県</option>
+							<option value="岩手県" <%= $pref eq '岩手県' ? 'selected="selected"' : '' %>>岩手県</option>
+							<option value="宮城県" <%= $pref eq '宮城県' ? 'selected="selected"' : '' %>>宮城県</option>
+							<option value="秋田県" <%= $pref eq '秋田県' ? 'selected="selected"' : '' %>>秋田県</option>
+							<option value="山形県" <%= $pref eq '山形県' ? 'selected="selected"' : '' %>>山形県</option>
+							<option value="福島県" <%= $pref eq '福島県' ? 'selected="selected"' : '' %>>福島県</option>
+						</optgroup>
+						<optgroup label="関東">
+							<option value="茨城県" <%= $pref eq '茨城県' ? 'selected="selected"' : '' %>>茨城県</option>
+							<option value="栃木県" <%= $pref eq '栃木県' ? 'selected="selected"' : '' %>>栃木県</option>
+							<option value="群馬県" <%= $pref eq '群馬県' ? 'selected="selected"' : '' %>>群馬県</option>
+							<option value="埼玉県" <%= $pref eq '埼玉県' ? 'selected="selected"' : '' %>>埼玉県</option>
+							<option value="千葉県" <%= $pref eq '千葉県' ? 'selected="selected"' : '' %>>千葉県</option>
+							<option value="東京都" <%= $pref eq '東京都' ? 'selected="selected"' : '' %>>東京都</option>
+							<option value="神奈川県" <%= $pref eq '神奈川県' ? 'selected="selected"' : '' %>>神奈川県</option>
+						</optgroup>
+					</select>
+				</dd>
+			</dl>
+			<dl>
+				<dt>住所</dt>
+				<dd>
+					<em>市区町村</em>
+					<input type="text" name="addr1" id="addr1" maxlength="20" value="<%= param('addr1') %>" />
+					<em>丁目番地</em>
+					<input type="text" name="addr2" id="addr2" maxlength="50" value="<%= param('addr2') %>" />
+				</dd>
+				<dd>
+					<em>建物名</em>
+					<input type="text" name="addr3" id="addr3" maxlength="50" value="<%= param('addr3') %>" />
+				</dd>
+			</dl>
+		</div>
+		<div id="yourContacts">
+			<h4>連絡先の入力</h4>
+			<dl class="half itemSet">
+				<dt>電話番号</dt>
+				<dd>
+					<input type="text" name="tel1" id="tel1" maxlength="5" value="<%= param('tel1') %>" /> -
+					<input type="text" name="tel2" id="tel2" maxlength="5" value="<%= param('tel2') %>" /> -
+					<input type="text" name="tel3" id="tel3" maxlength="5" value="<%= param('tel3') %>" />
+				</dd>
+			</dl>
+			<dl class="half itemSet">
+				<dt>FAX</dt>
+				<dd>
+					<input type="text" name="fax1" id="fax1" maxlength="5" value="<%= param('fax1') %>" /> -
+					<input type="text" name="fax2" id="fax2" maxlength="5" value="<%= param('fax2') %>" /> -
+					<input type="text" name="fax3" id="fax3" maxlength="5" value="<%= param('fax3') %>" />
+				</dd>
+			</dl>
+			<dl class="half itemSet">
+				<dt>メールアドレス<span>[必須]</span></dt>
+				<dd>
+					<input type="text" name="mail1" id="mail" class="full" maxlength="120" value="<%= param('mail1') %>" />
+				</dd>
+			</dl>
+			<dl class="half itemSet">
+				<dt>メールアドレス（確認用）<span>[必須]</span></dt>
+				<dd>
+					<input type="text" name="mail2" id="checkmail" class="full" maxlength="120" value="<%= param('mail2') %>" />
+				</dd>
+			</dl>
+		</div>
+		<div id="inquiryText" class="formBox clearfix">
+			<h4>お問い合せ内容<span>[必須]</span></h4>
+			<dl class="full itemSet">
+				<dt>お問い合せ内容を下記テキストエリアへ入力してください</dt>
+				<dd><textarea name="msg" id="text" cols="45" rows="5"><%= param('msg') %></textarea></dd>
+			</dl>
+		</div>
+		<ul id="formAct">
+			<input id="submitBtn" type="submit" value="入力した内容を確認します" />
+		</ul>
+	</form>
+</body>
+</html>
