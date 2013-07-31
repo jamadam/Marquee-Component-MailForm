@@ -45,7 +45,7 @@ use Mojo::Date;
     
     ## Incompleted post
     
-    $t->post_form_ok('/index.html', {name1 => 'name1'})
+    $t->post_ok('/index.html', form => {name1 => 'name1'})
         ->status_is(200)
         ->text_is('title', 'MailForm Test')
         ->element_exists('#errorMessage')
@@ -60,8 +60,8 @@ use Mojo::Date;
     
     ## Confirm page
     
-    $t->post_form_ok('/index.html', {
-        nextpage=> '/confirm.html',
+    $t->post_ok('/index.html', form => {
+        nextpage=> 'confirm.html',
         name1   => 'name1',
         name2   => 'name2',
         kana1   => 'kana1',

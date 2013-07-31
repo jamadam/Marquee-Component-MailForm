@@ -25,7 +25,7 @@
 
 	<form method="post" action="./index.html" id="contactForm">
 		<div>
-			<input type="hidden" name="nextpage" value="/confirm.html" />
+			<input type="hidden" name="nextpage" value="confirm.html" />
 		</div>
 		<div id="yourName" class="formBox clearfix">
 			<h4>お名前の入力[必須]</h4>

@@ -42,8 +42,7 @@ our $VERSION = '0.01';
                 $app->serve_redirect($tx->req->body_params->param('nextpage'));
             } else {
                 my $template = $tx->req->body_params->param('nextpage');
-                $template =~ s{^/}{};
-                $app->serve_dynamic($app->search_template($template));
+                $app->dynamic->serve($app->dynamic->search($template));
             }
         }
     }
