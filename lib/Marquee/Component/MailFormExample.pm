@@ -75,7 +75,7 @@ use Mojo::Base qw(Marquee::Component::MailForm);
         my ($self) = @_;
         
         my $tpl = __PACKAGE__->Marquee::asset('mail_forward.html.ep');
-        my $body = Marquee->c->app->ssi_handlers->{ep}->render($tpl);
+		my $body = Marquee->c->app->dynamic->render($tpl);
         
         return 'お問い合わせがありました', $body;
     }
@@ -84,7 +84,7 @@ use Mojo::Base qw(Marquee::Component::MailForm);
         my ($self) = @_;
         
         my $tpl = __PACKAGE__->Marquee::asset('mail_respond.html.ep');
-        my $body = Marquee->c->app->ssi_handlers->{ep}->render($tpl);
+		my $body = Marquee->c->app->dynamic->render($tpl);
         
         return 'お問合せを承りました', $body;
     }
